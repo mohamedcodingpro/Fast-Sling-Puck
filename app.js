@@ -6,12 +6,13 @@ const restartBtn = document.getElementById('restart-btn');
 
 const slingSound = new Audio("sounds/sling.mp3");
 const winSound = new Audio("sounds/win.mp3");
-const goalSound = new Audio("sounds/goal.mp3"); // New sound for scoring a goal
+const goalSound = new Audio("sounds/goal.mp3"); // Sound for scoring a goal
 
 let player1Score = 0;
 let player2Score = 0;
-const puckCount = 5; // each player starts with 5 pucks
+const puckCount = 5; // Each player starts with 5 pucks
 
+// Create initial pucks for each player
 function createPucks(player) {
     const puckContainer = player === 1 ? player1Pucks : player2Pucks;
     
@@ -24,6 +25,7 @@ function createPucks(player) {
     }
 }
 
+// Flick puck towards the opponent's slot
 function flickPuck(puck, player) {
     const opponentSlot = player === 1 ? player2Slot : player1Slot;
     
@@ -32,15 +34,17 @@ function flickPuck(puck, player) {
     const moveX = opponentSlot.offsetLeft - puck.offsetLeft;
     const moveY = opponentSlot.offsetTop - puck.offsetTop;
 
-    puck.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    puck.style.transform = `translate(${moveX}px, ${moveY}px)`; 
 
     setTimeout(() => {
         puck.remove();
+        goalSound.play(); // Play goal sound when puck is sent
         checkWinner();
         if (player === 1) setTimeout(aiMove, 1500); // AI moves after player
     }, 500);
 }
 
+// Check if any player has won
 function checkWinner() {
     const player1PucksLeft = document.querySelectorAll("#player1-pucks .puck").length;
     const player2PucksLeft = document.querySelectorAll("#player2-pucks .puck").length;
@@ -60,6 +64,7 @@ function checkWinner() {
     }
 }
 
+// AI player logic to move pucks
 function aiMove() {
     if (document.querySelectorAll("#player2-pucks .puck").length === 0) return;
 
@@ -72,15 +77,19 @@ function aiMove() {
     }, Math.random() * 2000 + 1000);
 }
 
+// Reset game function (clear pucks and scores)
 function resetGame() {
     player1Pucks.innerHTML = '';
     player2Pucks.innerHTML = '';
     createPucks(1);
     createPucks(2);
+    document.getElementById("score1").innerText = player1Score;
+    document.getElementById("score2").innerText = player2Score;
 }
 
+// Event listener for the restart button to reset the game
 restartBtn.addEventListener("click", resetGame);
 
-// Initialize game
+// Initialize the game with pucks for both players
 createPucks(1);
 createPucks(2);

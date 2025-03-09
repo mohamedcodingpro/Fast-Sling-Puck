@@ -7,32 +7,35 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Fast Sling Puck</h1>
-
-    <div id="scoreboard">
-        <span>Player 1: <span id="score1">0</span></span>
-        <span>Player 2: <span id="score2">0</span></span>
-    </div>
-
-    <div id="game-container">
-        <div class="side">
-            <div class="goal-slot" id="player1-slot"></div>
-            <div class="puck-area" id="player1-pucks"></div>
+    <header>
+        <h1 role="heading" aria-level="1">Fast Sling Puck</h1>
+        <div id="scoreboard" role="status">
+            <span>Player 1: <span id="score1">0</span></span>
+            <span>Player 2: <span id="score2">0</span></span>
         </div>
+    </header>
 
-        <div id="board-center">
+    <main id="game-container" role="application">
+        <section class="player-side" aria-labelledby="player1-label">
+            <div class="goal-slot" id="player1-slot"></div>
+            <div class="puck-area" id="player1-pucks" aria-describedby="player1-instructions"></div>
+        </section>
+
+        <div class="divider-container">
             <div class="divider">
                 <div class="elastic-band"></div>
             </div>
         </div>
 
-        <div class="side">
-            <div class="puck-area" id="player2-pucks"></div>
+        <section class="player-side" aria-labelledby="player2-label">
+            <div class="puck-area" id="player2-pucks" aria-describedby="player2-instructions"></div>
             <div class="goal-slot" id="player2-slot"></div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <button id="restart-btn">Restart Game</button>
+    <button id="restart-btn" class="wooden-button" aria-label="Restart Game">
+        <span class="button-text">Restart Game</span>
+    </button>
 
     <script src="app.js"></script>
 </body>
